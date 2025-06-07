@@ -3,7 +3,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
-from wtforms.fields.html5 import EmailField
+try:
+    # WTForms >=3 removed the html5 module; fall back to new location
+    from wtforms.fields import EmailField
+except ImportError:  # pragma: no cover - fallback for WTForms<3
+    from wtforms.fields.html5 import EmailField
 
 
 class RegistrationForm(FlaskForm):
